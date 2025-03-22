@@ -4,7 +4,7 @@
         <title>Capture</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://lib.reklaw.dev/styles/minimalistic.css">
         <link rel="stylesheet" href="styles/globals.css">
         <link rel="stylesheet" href="styles/style.css">
@@ -18,12 +18,43 @@
             </div>
             <div class="container">
                 <div class="content">
+                    <div id="results" class="vertical-container">
+                        <h1>Results</h1>
+                        <div class="result-box">
+                            <h3 class="results-header">Detected</h3>
+                            <div class="result-item">Apple</div>
+                            <div class="result-item">Apple</div>
+                            <div class="result-item">Apple</div>
+                            <div class="result-item">Apple</div>
+                        </div>
+                        <h1>Recipes</h1>
+                        <div id="recipeContainer">
+                            <a class="recipe-item" href="/">
+                                <img src="https://eatdessertsnack.com/wp-content/uploads/2024/05/Chicken-Pot-Pie-with-frozen-veggies-1200-2.jpg">
+                                <h3>Chicken Pot Pie</h3>
+                            </a>
+                            <a class="recipe-item" href="/">
+                                <img src="https://eatdessertsnack.com/wp-content/uploads/2024/05/Chicken-Pot-Pie-with-frozen-veggies-1200-2.jpg">
+                                <h3>Chicken Pot Pie</h3>
+                            </a>
+                            <a class="recipe-item" href="/">
+                                <img src="https://eatdessertsnack.com/wp-content/uploads/2024/05/Chicken-Pot-Pie-with-frozen-veggies-1200-2.jpg">
+                                <h3>Chicken Pot Pie</h3>
+                            </a>
+                            <a class="recipe-item" href="/">
+                                <img src="https://eatdessertsnack.com/wp-content/uploads/2024/05/Chicken-Pot-Pie-with-frozen-veggies-1200-2.jpg">
+                                <h3>Chicken Pot Pie</h3>
+                            </a>
+                        </div>
+                    </div>
                     <a class="back-button" href="index.html"><img src="assets/back.png"></a>
                     <video id="camera" autoplay></video>
                     <div class="camera-navigation centered-children">
-                        <button class="upload-button">Upload</button>
-                        <button class="camera-button"></button>
+                        <input type="file" id="fileUpload" style="display: none">
+                        <button class="upload-button" onclick="uploadFile()">Upload</button>
+                        <button class="camera-button" onclick="uploadCamera()"></button>
                     </div>
+                    <canvas id="canvas" style="display: none"></canvas>
                 </div>
             </div>
         </div>
