@@ -31,6 +31,7 @@ body {
 
 .content {
     height: 100%;
+    position: relative;
 }
 
 .navigation {
@@ -38,4 +39,38 @@ body {
     background: var(--accent);
     padding: 1rem;
     box-sizing: border-box;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.camera-navigation {
+    background: var(--accent-transparent);
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    padding: 0.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.camera-button {
+    background: white;
+    border: solid 1px var(--accent);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+}
+
+.upload-button {
+    position: absolute;
+    left: 0.5rem;
+    border: solid 1px var(--color);
+    background: var(--accent-transparent);
+    color: var(--color);
+    border-radius: 2rem;
 }
