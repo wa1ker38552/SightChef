@@ -6,7 +6,7 @@ body {
 
 .phone-border {
     position: relative;
-    width: 26rem;
+    width: 400px;
     height: 100%;
     border: solid 10px black;
     border-radius: 40px;
