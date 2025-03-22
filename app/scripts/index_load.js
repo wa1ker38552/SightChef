@@ -1,0 +1,67 @@
+function getList() {
+    const list = JSON.parse(localStorage.getItem("list"));
+    if (list != null) return list;
+    return [];
+}
+
+function setList(data) {
+    localStorage.setItem("list", JSON.stringify(data));
+}
+
+function addToList(name, quantity) {
+    const list = getList();
+    if (name != "" && quantity != "") {
+        list.push({"name": name, "quantity": quantity})
+    }
+    setList(list);
+}
+
+function modalClose() {
+    addToList(dquery("#ingredientName").value, dquery("#ingredientQuantity").value)
+    dquery("#ingredientName").value = "";
+    dquery("#ingredientQuantity").value = "";
+    loadList();
+    animateCloseModal(dquery("#modal"));
+
+}
+
+function removeItem(num, reload) {
+
+    const list = getList();
+
+    if (num < 0 || list == null || num > list.length) 
+        return;
+
+    list.splice(num, 1);
+    setList(list);
+    if (Boolean(reload)) loadList();
+
+}
+
+function loadList() {
+    const list = getList();
+    if (list == null) {
+        return;
+    }
+
+    let listItems = "";
+    let num = 1;
+
+    list.forEach(element => {
+        listItems += `
+        <div>${num}. ${element['name']} (${element['quantity']})
+            <button onclick="removeItem(${num - 1}, true)">X</button>
+        </div>`
+        num++;
+    });
+
+    document.getElementById("shoppingListItems").innerHTML = listItems;
+
+}
+
+function main() {
+    loadList();
+
+}
+
+window.onload = main;

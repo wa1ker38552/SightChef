@@ -17,13 +17,30 @@
                 <div class="phone-island"></div>
             </div>
             <div class="container">
-                <div class="content">
+                <div class="content vertical-container">
+                    <h1 class="welcome">Welcome to SightChef</h1>
+                    <div class="centered-horizontally">
+                        <div class="shopping-list vertical-container centered-children id="shoppingList">
+                            <h2>Shopping List</h2>
+                            <div class="shopping-list-items" id="shoppingListItems">
 
+                            </div>
+                            <button id="modalOpen" onclick="animateOpenModal(dquery('#modal'))">Add More</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="navigation centered-children">
                     <a href="index.html"><img class="navigation-icon" src="assets/home.png"></a>
                     <a href="capture.html"><div class="capture centered-children"><img src="assets/camera.png"></div></a>
                     <a href="settings.html"><img class="navigation-icon" src="assets/settings.png"></a>
+                </div>
+                <div id="modal" class="modal-background centered-children" style="display: none; width: 100%; height:100%">
+                    <div class="modal" style="background: white; text-align:center; width:15rem;">
+                        <h1>Add new ingredient</h1>
+                        <input id="ingredientName" type="text"></input>
+                        <input id="ingredientQuantity" type="number"></input>
+                        <button id="modalSubmit" onclick="modalClose()">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
