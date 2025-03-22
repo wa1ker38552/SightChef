@@ -49,8 +49,7 @@ function loadList() {
 
     list.forEach(element => {
         listItems += `
-        <div>${num}. ${element['name']} (${element['quantity']})
-            <button onclick="removeItem(${num - 1}, true)">X</button>
+        <div class="shopping-item" onclick="removeItem(${num - 1}, true)">${element['name']} x${element['quantity']}
         </div>`
         num++;
     });
@@ -61,7 +60,11 @@ function loadList() {
 
 function main() {
     loadList();
-
+    window.onclick = function(e) {
+        if (e.target == dquery("#modal")) {
+            animateCloseModal(dquery("#modal"))
+        }
+    }
 }
 
 window.onload = main;
