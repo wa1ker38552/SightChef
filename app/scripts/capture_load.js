@@ -1,5 +1,5 @@
 function processResponse(data) {
-    console.log(data)
+    dquery("#results").style.display = ""
 }
 
 function uploadFile() {
