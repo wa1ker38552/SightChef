@@ -2,6 +2,7 @@ body {
     padding: 2rem;
     box-sizing: border-box;
     background: transparent;
+    font-family: "Open Sans";
 }
 
 .phone-border {
@@ -20,6 +21,7 @@ body {
     background: black;
     height: 1.5rem;
     border-radius: 0 0 20px 20px;
+    z-index: 9999;
 }
 
 .container {
@@ -36,9 +38,9 @@ body {
 
 .navigation {
     width: 100%;
-    background: var(--accent);
-    padding: 0.2rem;
+    padding: 0.5rem;
     box-sizing: border-box;
+    gap: 1.5rem;
 }
 
 video {
@@ -54,13 +56,13 @@ video {
     box-sizing: border-box;
     position: absolute;
     bottom: 0;
-    padding: 0.5rem;
+    padding: 1rem;
     backdrop-filter: blur(10px);
 }
 
 .camera-button {
     background: white;
-    border: solid 1px var(--accent);
+    border: solid 2px var(--accent-dark);
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
@@ -68,9 +70,45 @@ video {
 
 .upload-button {
     position: absolute;
-    left: 0.5rem;
-    border: solid 1px var(--color);
+    left: 1rem;
+    border: solid 2px var(--accent-dark);
     background: var(--accent-transparent);
-    color: var(--color);
+    color: var(--accent-dark);
     border-radius: 2rem;
+    font-weight: 700;
+}
+
+.capture {
+    width: 4rem;
+    height: 4rem;
+    background: var(--accent-dark);
+    border-radius: 50%;
+}
+
+.capture img {
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+.navigation img {
+    filter: brightness(0) invert(1);
+}
+
+.navigation-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    filter: brightness(0) invert(32%) sepia(54%) saturate(1246%) hue-rotate(121deg) brightness(89%) contrast(97%) !important;
+}
+
+.back-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 9999;
+}
+
+.back-button img {
+    width: 2rem;
+    height: 2rem;
+    filter: brightness(0) invert(32%) sepia(54%) saturate(1246%) hue-rotate(121deg) brightness(89%) contrast(97%) !important;
 }
