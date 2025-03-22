@@ -1,6 +1,7 @@
 body {
     padding: 2rem;
     box-sizing: border-box;
+    background: transparent;
 }
 
 .phone-border {
@@ -19,4 +20,22 @@ body {
     background: black;
     height: 1.5rem;
     border-radius: 0 0 20px 20px;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    background: var(--background);
+}
+
+.content {
+    height: 100%;
+}
+
+.navigation {
+    width: 100%;
+    background: var(--accent);
+    padding: 1rem;
+    box-sizing: border-box;
 }
