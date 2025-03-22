@@ -36,6 +36,22 @@ body {
 .navigation {
     width: 100%;
     background: var(--accent);
-    padding: 1rem;
+    padding: 0.2rem;
     box-sizing: border-box;
+}
+
+.navigation img {
+    width: 2.0rem;
+    height: 2.0rem;
+    padding: 0.25rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+.capture {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: solid 2px var(--accent-dark);
+    border-radius:100%; 
+    background-color: var(--accent-dark);
 }
