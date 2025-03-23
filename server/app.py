@@ -5,15 +5,17 @@ from PIL import Image
 import base64
 import json
 import io
-from ..model.main import get_ingredients
+import sys
+sys.path.append(r"C:\Users\walke\Downloads\VSCode\SightChef")
 
-db = json.loads(open("database_1.json", "r").read())
+from model.main import get_ingredients  
+
+db = json.loads(open("database.json", "r").read())
 app = Flask(__name__)
 CORS(app)
 version = '0.0.0'
 
 def match_recipes_from_ingredients(ingredients: list[str]):
-
     for i in range(len(ingredients)):
         ingredients[i] = ingredients[i].lower().strip()
 
@@ -21,8 +23,6 @@ def match_recipes_from_ingredients(ingredients: list[str]):
     possible_recipes = []
 
     for ingredient in ingredients:
-        print(ingredient)
-        print()
         recipes = db['Ingredients'][ingredient]
         for recipe in (list(recipes.keys())):
             if recipe not in all_recipes:
@@ -35,7 +35,7 @@ def match_recipes_from_ingredients(ingredients: list[str]):
             if ingredient not in ingredients:
                 count += 1
             
-            if (count < (len(recipe['Ingredients']) * 0.3) / 1 and recipe not in possible_recipes):
+            if (count < (len(recipe['Ingredients']) * 0.1) / 1 and recipe not in possible_recipes):
                 possible_recipes.append(recipe)
 
 
@@ -43,7 +43,10 @@ def match_recipes_from_ingredients(ingredients: list[str]):
 
 def match_recipes(image):
     ingredients = get_ingredients(image)
-    return match_recipes_from_ingredients(ingredients)
+    return {
+        'ingredients': ingredients,
+        'recipes': match_recipes_from_ingredients(ingredients)
+    }
 
 @app.route('/')
 def app_index():
@@ -73,7 +76,6 @@ def api_process():
         img = Image.open(io.BytesIO(base64.b64decode(data['image'])))
     else:
         img = Image.open(request.files['image'])
-    img.show()
-    return {'success': True}
+    return {'success': True, 'data': match_recipes(img)}
 
 app.run(host='0.0.0.0', port=8002)

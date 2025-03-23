@@ -1,5 +1,26 @@
+function renderItem(item) {
+    const e = dcreate("a", "recipe-item", `
+        <img src='${item.img_url}'>
+        <h3>${item.Recipe_title}</h3>
+    `)
+
+    e.target = "_blank"
+    e.href = item.url
+    return e
+}
+
 function processResponse(data) {
     dquery("#results").style.display = ""
+    const parent = dquery("#ingredientsList")
+    for (item of data.data.ingredients) {
+        parent.append(dcreate("div", "result-item", item))
+    }
+
+    const recipes = dquery("#recipeContainer")
+    for (item of data.data.recipes) {
+        recipes.append(renderItem(item))
+    }
+    dquery("#loadingScreen").style.display = "none"
 }
 
 function uploadFile() {
@@ -33,7 +54,8 @@ function uploadCamera() {
     }
     context.drawImage(video, offsetX, offsetY, drawWidth, drawHeight, 0, 0, canvasWidth, canvasHeight);
     const base64Image = canvas.toDataURL("image/jpeg")
-
+    dquery('#loadingScreen').style.display = ""
+    
     fetch("http://localhost:8002/api/process", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -61,6 +83,7 @@ window.onload = function() {
     }
 
     fileInput.onchange = function(e) {
+        dquery("#loadingScreen").style.display = ""
         const file = fileInput.files[0];
         let formData = new FormData();
         formData.append('image', file);

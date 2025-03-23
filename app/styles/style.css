@@ -26,6 +26,7 @@ body {
 }
 
 .container {
+    position: relative;
     display: grid;
     grid-template-rows: 1fr auto;
     height: 100%;
@@ -261,6 +262,11 @@ canvas {
     height: calc(100vh - 30rem);
 }
 
+#ingredientsList {
+    height: 20rem;
+    overflow: auto;
+}
+
 .recipe-item {
     position: relative;
     border: solid 2px var(--accent);
@@ -339,3 +345,33 @@ canvas {
     filter: brightness(0) invert(16%) sepia(72%) saturate(4243%) hue-rotate(157deg) brightness(97%) contrast(97%);
 
 }
+
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100%);
+    background: var(--background);
+    z-index: 10000;
+}
+
+.loader {
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid var(--accent);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
