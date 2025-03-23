@@ -1,7 +1,12 @@
-function renderItem(item) {
+function renderItem(ingredients, item) {
+    let i = ''
+    for (ing of item.Ingredients) {
+        i += `${(ingredients.includes(ing.ingredient_name) ? "✅" : "❌")} ${ing.ingredient_name}<br>`
+    }
     const e = dcreate("a", "recipe-item", `
         <img src='${item.img_url}'>
         <h3>${item.Recipe_title}</h3>
+        <div class='tooltip'>${i}</div>
     `)
 
     e.target = "_blank"
@@ -18,7 +23,7 @@ function processResponse(data) {
 
     const recipes = dquery("#recipeContainer")
     for (item of data.data.recipes) {
-        recipes.append(renderItem(item))
+        recipes.append(renderItem(data.data.ingredients, item))
     }
     dquery("#loadingScreen").style.display = "none"
 }
