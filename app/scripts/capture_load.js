@@ -22,8 +22,10 @@ function processResponse(data) {
     }
 
     const recipes = dquery("#recipeContainer")
+    data.data.recipes.sort((a, b) => a[1] - b[1])
+    data.data.recipes.reverse()
     for (item of data.data.recipes) {
-        recipes.append(renderItem(data.data.ingredients, item))
+        recipes.append(renderItem(data.data.ingredients, item[0]))
     }
     dquery("#loadingScreen").style.display = "none"
 }

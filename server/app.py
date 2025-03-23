@@ -32,12 +32,11 @@ def match_recipes_from_ingredients(ingredients: list[str]):
         recipe = db["Recipes"][recipe]
         count = 0
         for ingredient in recipe['Ingredients']:
-            if ingredient not in ingredients:
+            if ingredient['ingredient_name'].lower().strip() in ingredients:
                 count += 1
             
-            if (count < (len(recipe['Ingredients']) * 0.1) / 1 and recipe not in possible_recipes):
-                possible_recipes.append(recipe)
-
+        if (count/len(recipe['Ingredients']) > 0.2 and recipe not in possible_recipes):
+            possible_recipes.append([recipe, count/len(recipe['Ingredients'])])
 
     return possible_recipes
 
