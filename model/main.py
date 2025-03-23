@@ -7,16 +7,17 @@ from transformers import Owlv2Processor, Owlv2ForObjectDetection
 import pandas as pd
 import json
 
+processor = Owlv2Processor.from_pretrained("google/owlv2-base-patch16-ensemble")
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model = Owlv2ForObjectDetection.from_pretrained("google/owlv2-base-patch16-ensemble").to(device)
 
 
-def get_ingredients(image, threshold=0.35, ingredients_list_path="filtered_list.json"):
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+def get_ingredients(image, threshold=0.35, ingredients_list_path="ingredients_list.json"):
     # device = "cpu"
     print("device is ", device) 
     with open(r"C:\Users\walke\Downloads\VSCode\SightChef\model\ingredients_list.json", "r") as file:
         ingredients_list = json.load(file)
-    processor = Owlv2Processor.from_pretrained("google/owlv2-base-patch16-ensemble")
-    model = Owlv2ForObjectDetection.from_pretrained("google/owlv2-base-patch16-ensemble").to(device)
+    
     # model = torch.compile(model, mode="reduce-overhead")
     # image = Image.open(requests.get(url, stream=True).raw)
     image = image.resize((672, 672))
