@@ -10,17 +10,21 @@ import json
 
 
 def get_ingredients(image, threshold=0.25, ingredients_list_path="ingredients_list.json"):
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    # device = "cpu"
+    print("device is ", device) 
     with open("ingredients_list.json", "r") as file:
         ingredients_list = json.load(file)
     processor = Owlv2Processor.from_pretrained("google/owlv2-base-patch16-ensemble")
-    model = Owlv2ForObjectDetection.from_pretrained("google/owlv2-base-patch16-ensemble")
+    model = Owlv2ForObjectDetection.from_pretrained("google/owlv2-base-patch16-ensemble").to(device)
+    # model = torch.compile(model, mode="reduce-overhead")
     # image = Image.open(requests.get(url, stream=True).raw)
     image = image.resize((672, 672))
     texts = [[f"a photo of {ingredient}" for ingredient in ingredients_list]]
-    inputs = processor(text=texts, images=image, return_tensors="pt")
-    with torch.no_grad():
+    inputs = processor(text=texts, images=image,return_tensors="pt").to(device)
+    with torch.no_grad(), torch.cuda.amp.autocast():
         outputs = model(**inputs)
-    target_sizes = torch.Tensor([image.size[::-1]])
+    target_sizes = torch.Tensor([image.size[::-1]]).to(device)
     results = processor.post_process_grounded_object_detection(
         outputs=outputs,
         target_sizes=target_sizes,
@@ -71,3 +75,5 @@ def plot_image(results, image):
         plt.axis('off')
         plt.tight_layout()
         plt.show()
+
+# print(get_ingredients(image = Image.open(requests.get(url, stream=True).raw)))
