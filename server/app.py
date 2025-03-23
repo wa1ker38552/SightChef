@@ -5,15 +5,12 @@ from PIL import Image
 import base64
 import json
 import io
-from jdb import Database
 from ..model.main import get_ingredients
 
-db = json.loads(open('../database.json', 'r').read())
+db = json.loads(open("database_1.json", "r").read())
 app = Flask(__name__)
 CORS(app)
 version = '0.0.0'
-
-database = Database("database.json")
 
 def match_recipes_from_ingredients(ingredients: list[str]):
 
@@ -24,17 +21,21 @@ def match_recipes_from_ingredients(ingredients: list[str]):
     possible_recipes = []
 
     for ingredient in ingredients:
-        for recipe in database.get(['Ingredients', ingredient]).keys():
+        print(ingredient)
+        print()
+        recipes = db['Ingredients'][ingredient]
+        for recipe in (list(recipes.keys())):
             if recipe not in all_recipes:
                 all_recipes.append(recipe)
 
     for recipe in all_recipes:
-        success = True
+        recipe = db["Recipes"][recipe]
+        count = 0
         for ingredient in recipe['Ingredients']:
             if ingredient not in ingredients:
-                success = False
+                count += 1
             
-            if (success):
+            if (count < (len(recipe['Ingredients']) * 0.3) / 1 and recipe not in possible_recipes):
                 possible_recipes.append(recipe)
 
 
