@@ -4,11 +4,44 @@ from flask import Flask
 from PIL import Image
 import base64
 import io
+from jdb import Database
+from ..model.main import get_ingredients
 
 
 app = Flask(__name__)
 CORS(app)
 version = '0.0.0'
+
+database = Database("database.json")
+
+def match_recipes_from_ingredients(ingredients: list[str]):
+
+    for i in range(len(ingredients)):
+        ingredients[i] = ingredients[i].lower().strip()
+
+    all_recipes = []
+    possible_recipes = []
+
+    for ingredient in ingredients:
+        for recipe in database.get(['Ingredients', ingredient]).keys():
+            if recipe not in all_recipes:
+                all_recipes.append(recipe)
+
+    for recipe in all_recipes:
+        success = True
+        for ingredient in recipe['Ingredients']:
+            if ingredient not in ingredients:
+                success = False
+            
+            if (success):
+                possible_recipes.append(recipe)
+
+
+    return possible_recipes
+
+def match_recipes(image):
+    ingredients = get_ingredients(image)
+    return match_recipes_from_ingredients(ingredients)
 
 @app.route('/')
 def app_index():
