@@ -248,13 +248,17 @@ canvas {
     left: 1rem;
 }
 
-#recipeContainer {
+#recipeContainer, #searchIngredientsResult {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;
     height: 100%;
     overflow: auto;
     padding-right: 0.5rem;
+}
+
+#searchIngredientsResult {
+    height: calc(100vh - 30rem);
 }
 
 .recipe-item {
@@ -286,6 +290,7 @@ canvas {
     width: 100%;
     height: 100%;
     opacity: 90%;
+    object-fit: cover;
 }
 
 .shopping-item {

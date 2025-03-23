@@ -6,22 +6,25 @@ def work(recipes: list):
 
     for recipe in recipes:
 
-        database["recipes"][recipe["Recipe_id"]] = recipe
+        database["Recipes"][recipe["Recipe_id"]] = recipe
 
-        for ingredient in recipe["ingredients"]:
+        for ingredient in recipe["Ingredients"]:
             name = (ingredient["ingredient_name"]).strip().lower()
-            if database["ingredients"][name] != None:
+            if name in database["Ingredients"]:
                 #Database indexed by ingredients, containing a dictionary with all 
                 #of the recipes that can be made with that ingredient 
-                database["ingredients"][name][recipe["Recipe_id"]] = True
+                database["Ingredients"][name][recipe["Recipe_id"]] = ""
             else:
-                database["ingredients"][name] = {
-                    recipe["Recipe_id"]: True
+                database["Ingredients"][name] = {
+                    recipe["Recipe_id"]: ""
                 }
 
 if __name__ == "__main__":
-    database = {"recipes": {}, "ingredients": {}}
-    for num in range(25):
+    database = {"Recipes": {}, "Ingredients": {}}
+    for num in tqdm.tqdm(range(25)):
         with open(f"data/{num}.json", "r") as f:
-            recipes = json.loads(f.read())
-            work(recipes)
+            recipes = json.loads(f.read()).values()
+        work(recipes)
+
+        with open("database_1.json", "w") as f:
+            f.write(json.dumps(database, indent=2))
