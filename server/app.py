@@ -3,9 +3,10 @@ from flask import request
 from flask import Flask
 from PIL import Image
 import base64
+import json
 import io
 
-
+db = json.loads(open('../database.json', 'r').read())
 app = Flask(__name__)
 CORS(app)
 version = '0.0.0'
@@ -13,6 +14,21 @@ version = '0.0.0'
 @app.route('/')
 def app_index():
     return f'v{version}'
+
+@app.route('/api/search')
+def api_search():
+    i = request.args.get('ingredient')
+    ingredients = db['Ingredients']
+    if i in ingredients:
+        return {
+            'success': True,
+            'data': [{
+                'name': db['Recipes'][recipe]['Recipe_title'],
+                'image': db['Recipes'][recipe]['img_url'],
+                'url': db['Recipes'][recipe]['url']
+            } for recipe in ingredients[i]]
+        }
+    return {'success': False}
 
 @app.route('/api/process', methods=['POST'])
 def api_process():
