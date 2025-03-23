@@ -5,7 +5,7 @@ print(response.json())'''
 
 import json
 
-headers = {
+'''headers = {
     'Accent': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
     'Accent-Encodings': 'gzip, deflate, br, zstd',
     'Accept-Language': 'en-US,en;q=0.8',
@@ -24,4 +24,15 @@ data = {
 r = requests.post('https://cosylab.iiitd.edu.in/recipedb/search_recipe', headers=headers, data=data)
 
 with open('test.html', 'w') as file:
-    file.write(r.text)
+    file.write(r.text)'''
+
+
+'''data = json.loads(open('../database.json', 'r').read())
+
+while True:
+    i = input('> ')
+    if i in data['Ingredients']:
+        print([key for key in data['Ingredients'][i]])'''
+
+data = json.loads(open('../data/0.json', 'r').read())
+print(data['100017'])

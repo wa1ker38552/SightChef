@@ -58,12 +58,38 @@ function loadList() {
 
 }
 
+function renderRecipe(item) {
+    const e = dcreate("a", "recipe-item", `
+        <img src='${item.image}'>
+        <h3>${item.name}</h3>
+    `)
+    e.target = "_blank"
+    e.href = item.url
+    return e
+}
+
 function main() {
     loadList();
     window.onclick = function(e) {
         if (e.target == dquery("#modal")) {
             animateCloseModal(dquery("#modal"))
         }
+    }
+
+    const parent = dquery("#searchIngredientsResult")
+    const input = dquery("#searchInput")
+    input.oninput = function() {
+        request("http://localhost:8002/api/search?ingredient="+input.value)
+            .then(data => {
+                parent.innerHTML = ""
+                if (data.success) {
+                    for (item of data.data) {
+                        parent.append(renderRecipe(item))
+                    }
+                } else {
+                    parent.innerHTML = "<i>No results found</i>"
+                }
+            })
     }
 }
 
