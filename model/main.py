@@ -39,3 +39,35 @@ def get_ingredients(image, threshold=0.25, ingredients_list_path="ingredients_li
             clean_list.add(clean_label)
     return list(clean_list)
 
+def plot_image(results, image):
+    clean_list = set()
+    fig, ax = plt.subplots(1, figsize=(16, 12))
+    ax.imshow(image)
+
+    # Process and visualize results
+    for result in results:
+        for box, score, label in zip(result["boxes"], result["scores"], result["text_labels"]):
+            clean_label = label.replace("a photo of ", "").strip()
+            confidence = round(score.item(), 3)
+            
+            # Convert box coordinates to integers
+            box = [int(coord) for coord in box.tolist()]
+            if (confidence < 0.2):
+                continue
+            # Create a Rectangle patch
+            clean_list.add(clean_label)
+            rect = patches.Rectangle((box[0], box[1]), box[2] - box[0], box[3] - box[1],
+                                    linewidth=2, edgecolor='r', facecolor='none')
+            
+            # Add the patch to the Axes
+            ax.add_patch(rect)
+            
+            # Add label and confidence score
+            ax.text(box[0], box[1] - 5, f'{clean_label}: {confidence:.2f}',
+                    color='red', fontweight='bold', backgroundcolor='white')
+
+            print(f"Detected: {clean_label}, Confidence: {confidence:.2f}, Box: {box}")
+
+        plt.axis('off')
+        plt.tight_layout()
+        plt.show()
