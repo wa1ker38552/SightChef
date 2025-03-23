@@ -9,11 +9,11 @@ import json
 
 
 
-def get_ingredients(image, threshold=0.25, ingredients_list_path="ingredients_list.json"):
+def get_ingredients(image, threshold=0.35, ingredients_list_path="filtered_list.json"):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     # device = "cpu"
     print("device is ", device) 
-    with open("ingredients_list.json", "r") as file:
+    with open(r"C:\Users\walke\Downloads\VSCode\SightChef\model\ingredients_list.json", "r") as file:
         ingredients_list = json.load(file)
     processor = Owlv2Processor.from_pretrained("google/owlv2-base-patch16-ensemble")
     model = Owlv2ForObjectDetection.from_pretrained("google/owlv2-base-patch16-ensemble").to(device)
